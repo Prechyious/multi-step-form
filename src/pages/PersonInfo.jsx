@@ -1,6 +1,6 @@
 const PersonInfo = () => {
     return (
-        <section className="-mt-[4.7rem] rounded-md py-5 px-6 flex flex-col items-center justify-center max-w-xs mx-auto md:mt-10 md:mr-14 font-medium text-marineBlue bg-white shadow-lg">
+        <section className="-mt-[4.7rem] rounded-md py-5 px-6 md:p-0 md:h-3/4 flex flex-col items-center justify-center max-w-xs md:max-w-full md:shadow-none md:bg-none mx-auto md:mt-10 md:mr-14 font-medium text-marineBlue bg-white shadow-lg">
             <div className="mb-5 md:mb-10">
                 <h1 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2.5">
                     Personal info
@@ -44,10 +44,6 @@ const PersonInfo = () => {
                         placeholder="e.g. +1 234 567 890"
                     />
                 </div>
-
-                {/* <button className="md:absolute md:right-0  md:bottom-5 text-white py-2 px-5 bg-marineBlue rounded-md">
-                    Next Step
-                </button> */}
             </form>
         </section>
     );
