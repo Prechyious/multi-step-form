@@ -3,7 +3,7 @@ import PersonInfo from "./pages/PersonInfo";
 
 const App = () => {
     return (
-        <div className="flex mx-auto m-10 p-5 justify-around w-fit gap-20 bg-white">
+        <div className="md:flex md:flex-col md:mx-auto md:m-10 md:p-5 md:justify-around w-full md:gap-20">
             <Sidebar />
             <PersonInfo />
         </div>
