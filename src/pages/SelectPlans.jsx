@@ -1,173 +1,145 @@
-import { useFormContext } from "../components/context/FormContext";
 import arcadeIcon from "../assets/images/icon-arcade.svg";
 import advancedIcon from "../assets/images/icon-advanced.svg";
 import proIcon from "../assets/images/icon-pro.svg";
 import ToggleBtn from "../components/ToggleBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import {
+    nextStep,
+    prevStep,
+    updateSelectedPlan,
+} from "../features/form/formSlice";
+
+const planValues = [
+    {
+        id: 1,
+        planType: "arcade",
+        planImg: arcadeIcon,
+    },
+    {
+        id: 2,
+        planType: "advanced",
+        planImg: advancedIcon,
+    },
+    {
+        id: 3,
+        planType: "pro",
+        planImg: proIcon,
+    },
+];
 
 const SelectPlans = () => {
-    const { plan, setPlan } = useFormContext();
+    const [inputPlan, setInputPlan] = useState(null);
+    const { planOptions, selectedPlan, step } = useSelector(
+        (state) => state.form
+    );
+    const { planLength, option } = selectedPlan;
+    const dispatch = useDispatch();
+
+    const gotoNextStep = () => {
+        if (step === 4) {
+            return;
+        }
+
+        if (inputPlan) {
+            dispatch(
+                updateSelectedPlan({
+                    planLength,
+                    option: inputPlan.planType,
+                })
+            );
+            dispatch(nextStep());
+        } else if (option) {
+            dispatch(nextStep());
+        }
+    };
+
+    const gotoPrevStep = () => {
+        dispatch(prevStep());
+    };
+
     return (
         <>
-            {!plan ? (
-                <section className="-mt-[4.7rem] rounded-md py-5 px-6 md:p-0 md:h-3/4 flex flex-col justify-center max-w-xs md:max-w-full md:shadow-none md:bg-none mx-auto md:mt-10 md:mr-14 font-medium text-marineBlue bg-white shadow-lg">
-                    <div className="mb-5 md:mb-10">
-                        <h1 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2.5">
-                            Select your plan
-                        </h1>
-                        <p className="text-base font-medium text-coolGray max-w-xs md:max-w-full">
-                            You have the option of monthly or yearly billing.
-                        </p>
-                    </div>
+            <section className="container">
+                <div className="mb-3 md:mb-12">
+                    <h1 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2.5">
+                        Select your plan
+                    </h1>
+                    <p className="max-w-xs text-base font-medium text-coolGray md:max-w-full">
+                        You have the option of monthly or yearly billing.
+                    </p>
+                </div>
 
-                    <form>
-                        <div className="flex gap-2 border border-purplishBlue py-3 px-5 rounded-md cursor-pointer mb-3 bg-magnolia">
-                            <img src={arcadeIcon} alt="arcade" />
+                <form className="w-full mb-3 md:gap-4 md:grid md:grid-cols-3 md:mb-5">
+                    {planValues.map(({ id, planType, planImg }) => (
+                        <div
+                            key={id}
+                            className={`relative flex md:flex-col items-start gap-2 md:min-h-40 md:gap-10 md:justify-between px-5 py-2 lg:py-4 mb-2 border rounded-lg cursor-pointer hover:bg-magnolia hover:border-purplishBlue duration-300 ${
+                                selectedPlan.planLength === planType ||
+                                (inputPlan && inputPlan.planType === planType)
+                                    ? "bg-magnolia border-purplishBlue"
+                                    : "border-lightGray"
+                            }`}
+                        >
+                            <img src={planImg} alt={planType} />
                             <div className="">
                                 <label
-                                    className="cursor-pointer font-bold"
-                                    htmlFor="arcade"
+                                    className="font-bold capitalize cursor-pointer"
+                                    htmlFor={planType}
                                 >
-                                    Arcade
+                                    {planType}
                                 </label>
-                                <p className="text-coolGray">$9/mo</p>
+                                <p className="text-coolGray">
+                                    $
+                                    {planLength === "monthly"
+                                        ? planOptions[planType].monthly
+                                        : planOptions[planType].yearly}
+                                    /{planLength === "monthly" ? "mo" : "yr"}
+                                </p>
+                                {planLength === "yearly" && (
+                                    <p className="text-sm font-medium">
+                                        2 months free
+                                    </p>
+                                )}
                             </div>
                             <input
-                                hidden
+                                className="absolute inset-0 z-10 opacity-0 cursor-pointer"
                                 type="radio"
-                                name="arcade"
-                                id="arcade"
-                                checked={plan}
-                                onChange={() => setPlan(!plan)}
+                                name="plan"
+                                id={planType}
+                                value={planType}
+                                checked={inputPlan === planType}
+                                onChange={(e) =>
+                                    setInputPlan(
+                                        planValues.find(
+                                            (plan) =>
+                                                plan.planType === e.target.value
+                                        )
+                                    )
+                                }
                             />
                         </div>
-                        <div className="flex gap-2 border border-purplishBlue py-3 px-5 rounded-md cursor-pointer mb-3">
-                            <img src={advancedIcon} alt="advanced" />
-                            <div className="">
-                                <label
-                                    className="cursor-pointer font-bold"
-                                    htmlFor="advanced"
-                                >
-                                    Advanced
-                                </label>
-                                <p className="text-coolGray">$12/mo</p>
-                            </div>
-                            <input
-                                hidden
-                                type="radio"
-                                name="advanced"
-                                id="advanced"
-                                checked={plan}
-                                onChange={() => setPlan(!plan)}
-                            />
-                        </div>
-                        <div className="flex gap-2 border border-purplishBlue py-3 px-5 rounded-md cursor-pointer mb-5">
-                            <img src={proIcon} alt="pro" />
-                            <div className="">
-                                <label
-                                    className="cursor-pointer font-bold"
-                                    htmlFor="pro"
-                                >
-                                    Pro
-                                </label>
-                                <p className="text-coolGray">$15/mo</p>
-                            </div>
-                            <input
-                                hidden
-                                type="radio"
-                                name="pro"
-                                id="pro"
-                                checked={plan}
-                                onChange={() => setPlan(!plan)}
-                            />
-                        </div>
-                    </form>
-                    <ToggleBtn plan={plan} setPlan={setPlan} />
-                </section>
-            ) : (
-                <section className="-mt-[4.7rem] rounded-md py-5 px-6 md:p-0 md:h-3/4 flex flex-col justify-center max-w-xs md:max-w-full md:shadow-none md:bg-none mx-auto md:mt-10 md:mr-14 font-medium text-marineBlue bg-white shadow-lg">
-                    <div className="mb-5 md:mb-10">
-                        <h1 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2.5">
-                            Select your plan
-                        </h1>
-                        <p className="text-base font-medium text-coolGray max-w-xs md:max-w-full">
-                            You have the option of monthly or yearly billing.
-                        </p>
-                    </div>
+                    ))}
+                </form>
 
-                    <form>
-                        <div className="flex gap-2 border border-purplishBlue py-3 px-5 rounded-md cursor-pointer mb-3 bg-magnolia">
-                            <img src={arcadeIcon} alt="arcade" />
-                            <div>
-                                <label
-                                    className="cursor-pointer font-bold"
-                                    htmlFor="arcade"
-                                >
-                                    Arcade
-                                </label>
-                                <p className="text-coolGray">$90/yr</p>
-                                <p className="font-semibold text-sm">
-                                    2 months free
-                                </p>
-                            </div>
-                            <input
-                                hidden
-                                type="radio"
-                                name="arcade"
-                                id="arcade"
-                                checked={plan}
-                                onChange={() => setPlan(!plan)}
-                            />
-                        </div>
-                        <div className="flex gap-2 border border-purplishBlue py-3 px-5 rounded-md cursor-pointer mb-3">
-                            <img src={advancedIcon} alt="advanced" />
-                            <div className="">
-                                <label
-                                    className="cursor-pointer font-bold"
-                                    htmlFor="advanced"
-                                >
-                                    Advanced
-                                </label>
-                                <p className="text-coolGray">$120/yr</p>
-                                <p className="font-semibold text-sm">
-                                    2 months free
-                                </p>
-                            </div>
-                            <input
-                                hidden
-                                type="radio"
-                                name="advanced"
-                                id="advanced"
-                                checked={plan}
-                                onChange={() => setPlan(!plan)}
-                            />
-                        </div>
-                        <div className="flex gap-2 border border-purplishBlue py-3 px-5 rounded-md cursor-pointer mb-5">
-                            <img src={proIcon} alt="pro" />
-                            <div className="">
-                                <label
-                                    className="cursor-pointer font-bold"
-                                    htmlFor="pro"
-                                >
-                                    Pro
-                                </label>
-                                <p className="text-coolGray">$150/yr</p>
-                                <p className="font-semibold text-sm">
-                                    2 months free
-                                </p>
-                            </div>
-                            <input
-                                hidden
-                                type="radio"
-                                name="pro"
-                                id="pro"
-                                checked={plan}
-                                onChange={() => setPlan(!plan)}
-                            />
-                        </div>
-                    </form>
-                    <ToggleBtn plan={plan} setPlan={setPlan} />
-                </section>
-            )}
+                <ToggleBtn inputPlan={inputPlan} />
+            </section>
+            <div className="btn-container">
+                <div className="font-medium flex items-center justify-between mx-auto w-[20rem] md:w-full">
+                    <button
+                        onClick={gotoPrevStep}
+                        className="duration-300 text-coolGray hover:text-marineBlue"
+                    >
+                        Go back
+                    </button>
+                    <button
+                        onClick={gotoNextStep}
+                        className="px-5 py-2 text-sm text-white duration-300 rounded-md md:text-base md:right-0 md:bottom-5 bg-marineBlue hover:bg-marineBlue/90"
+                    >
+                        Next Step
+                    </button>
+                </div>
+            </div>
         </>
     );
 };

@@ -1,23 +1,25 @@
-import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Sidebar from "./components/Sidebar";
-import Steps from "./components/Steps";
-import PersonInfo from "./pages/PersonInfo";
+import PersonalInfo from "./pages/PersonalInfo";
 import SelectPlans from "./pages/SelectPlans";
 import Addons from "./pages/Addons";
 import Summary from "./pages/Summary";
+import ThankYou from "./pages/ThankYou";
 
 const App = () => {
+    const step = useSelector((state) => state.form.step);
     return (
-        <div className="md:relative md:flex md:max-w-4xl md:mx-auto md:m-10 md:p-2.5 w-full h-[100dvh] md:h-fit md:bg-white md:shadow-lg md:rounded-xl">
+        <main className="relative md:flex md:max-w-4xl md:mx-auto md:m-10 md:p-2.5 h-[100dvh] md:h-fit md:bg-white md:shadow-lg md:rounded-xl">
             <Sidebar />
-            <Routes>
-                <Route path="/" element={<PersonInfo />} />
-                <Route path="/select-plans" element={<SelectPlans />} />
-                <Route path="/addons" element={<Addons />} />
-                <Route path="/summary" element={<Summary />} />
-            </Routes>
-            <Steps />
-        </div>
+            <div className="md:relative md:flex-1">
+                {step === 1 && <PersonalInfo />}
+
+                {step === 2 && <SelectPlans />}
+                {step === 3 && <Addons />}
+                {step === 4 && <Summary />}
+                {step === 5 && <ThankYou />}
+            </div>
+        </main>
     );
 };
 

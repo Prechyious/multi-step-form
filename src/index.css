@@ -9,5 +9,17 @@ html {
 }
 
 body {
-    @apply bg-magnolia;
+    @apply h-screen bg-magnolia;
+}
+
+.container {
+    @apply -mt-[4.6rem] rounded-lg py-5 px-6 md:p-0 md:h-3/4 flex flex-col items-center md:items-start max-w-[20rem] md:max-w-md md:shadow-none mx-auto md:bg-none md:mt-10 font-medium text-marineBlue bg-white shadow-lg;
+}
+
+.addons-card {
+    @apply flex items-center w-full gap-2 p-2 mb-4 duration-300 ease-in-out border rounded-lg cursor-pointer hover:border-purplishBlue md:p-4;
+}
+
+.btn-container {
+    @apply absolute font-medium md:relative max-w-full bottom-0 md:bottom-2.5 right-0 flex items-center justify-center mx-auto w-full py-4 mt-10 bg-white md:max-w-md md:right-0 md:px-0;
 }
