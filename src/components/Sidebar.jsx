@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
     const step = useSelector((state) => state.form.step);
     return (
-        <aside className="min-w-[20rem] mx-auto min-h-[11rem] md:h-[36rem] md:rounded-lg md:min-w-[16rem] flex md:flex-col items-start gap-5 justify-center md:justify-start md:p-10 md:gap-3.5 p-5 bg-sideBarMobile md:bg-sideBar bg-cover md:bg-no-repeat z-10">
+        <aside className="min-w-[20rem] mx-auto min-h-[11.5rem] md:h-[36rem] md:rounded-lg md:min-w-[16rem] flex md:flex-col items-start gap-5 justify-center md:justify-start md:p-10 md:gap-3.5 p-5 bg-sideBarMobile md:bg-sideBar bg-cover md:bg-no-repeat z-10">
             <section className="flex flex-col items-center mt-4 text-white uppercase md:flex-row md:gap-7 md:mt-0">
                 <div
                     className={`h-6 w-6 p-4 rounded-full flex items-center justify-center font-bold border text-base md:h-10 md:w-10 md:p-5 duration-300 ${

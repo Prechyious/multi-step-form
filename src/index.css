@@ -9,11 +9,11 @@ html {
 }
 
 body {
-    @apply h-screen bg-magnolia;
+    @apply h-[100dvh] bg-magnolia;
 }
 
 .container {
-    @apply -mt-[4.6rem] rounded-lg py-5 px-6 md:p-0 md:h-3/4 flex flex-col items-center md:items-start max-w-[20rem] md:max-w-md md:shadow-none mx-auto md:bg-none md:mt-10 font-medium text-marineBlue bg-white shadow-lg;
+    @apply -mt-[4.8rem] rounded-lg py-5 px-6 md:p-0 md:h-3/4 flex flex-col items-center md:items-start max-w-[20rem] md:max-w-md md:shadow-none mx-auto md:bg-none md:mt-10 font-medium text-marineBlue bg-white shadow-lg;
 }
 
 .addons-card {

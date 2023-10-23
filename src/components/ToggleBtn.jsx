@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateSelectedPlan } from "../features/form/formSlice";
 import { useState } from "react";
 
-const ToggleBtn = ({ inputPlan }) => {
+const ToggleBtn = () => {
     const selectedPlan = useSelector((state) => state.form.selectedPlan);
     const { planLength } = selectedPlan;
     const [monthly, setMonthly] = useState(true);
@@ -12,16 +12,15 @@ const ToggleBtn = ({ inputPlan }) => {
         if (monthly && planLength === "monthly") {
             setMonthly(false);
             dispatch(
-                updateSelectedPlan({ planLength: "yearly", option: inputPlan })
+                updateSelectedPlan({ ...selectedPlan, planLength: "yearly" })
             );
         } else {
             dispatch(
-                updateSelectedPlan({ planLength: "monthly", option: inputPlan })
+                updateSelectedPlan({ ...selectedPlan, planLength: "monthly" })
             );
             setMonthly(true);
         }
     };
-    // console.log(inputPlan);
 
     return (
         <div className="flex items-center justify-center w-full gap-2 p-2 mx-auto rounded-md bg-magnolia">

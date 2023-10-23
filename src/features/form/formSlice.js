@@ -10,7 +10,7 @@ const initialState = {
 
     selectedPlan: {
         planLength: "monthly",
-        option: "arcade" || "advanced" || "pro",
+        option: "",
     },
 
     planOptions: {

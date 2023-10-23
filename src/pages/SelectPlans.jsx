@@ -29,28 +29,22 @@ const planValues = [
 ];
 
 const SelectPlans = () => {
-    const [inputPlan, setInputPlan] = useState(null);
     const { planOptions, selectedPlan, step } = useSelector(
         (state) => state.form
     );
     const { planLength, option } = selectedPlan;
     const dispatch = useDispatch();
 
-    const gotoNextStep = () => {
-        if (step === 4) {
-            return;
-        }
+    // const [inputPlan, setInputPlan] = useState(option);
 
-        if (inputPlan) {
-            dispatch(
-                updateSelectedPlan({
-                    planLength,
-                    option: inputPlan.planType,
-                })
-            );
+    const handleSelectPlan = (planType) => {
+        dispatch(updateSelectedPlan({ ...selectedPlan, option: planType }));
+    };
+    const gotoNextStep = () => {
+        if (option) {
             dispatch(nextStep());
-        } else if (option) {
-            dispatch(nextStep());
+        } else {
+            alert("Please select a plan");
         }
     };
 
@@ -71,58 +65,127 @@ const SelectPlans = () => {
                 </div>
 
                 <form className="w-full mb-3 md:gap-4 md:grid md:grid-cols-3 md:mb-5">
-                    {planValues.map(({ id, planType, planImg }) => (
-                        <div
-                            key={id}
-                            className={`relative flex md:flex-col items-start gap-2 md:min-h-40 md:gap-10 md:justify-between px-5 py-2 lg:py-4 mb-2 border rounded-lg cursor-pointer hover:bg-magnolia hover:border-purplishBlue duration-300 ${
-                                selectedPlan.planLength === planType ||
-                                (inputPlan && inputPlan.planType === planType)
-                                    ? "bg-magnolia border-purplishBlue"
-                                    : "border-lightGray"
-                            }`}
-                        >
-                            <img src={planImg} alt={planType} />
-                            <div className="">
-                                <label
-                                    className="font-bold capitalize cursor-pointer"
-                                    htmlFor={planType}
-                                >
-                                    {planType}
-                                </label>
-                                <p className="text-coolGray">
-                                    $
-                                    {planLength === "monthly"
-                                        ? planOptions[planType].monthly
-                                        : planOptions[planType].yearly}
-                                    /{planLength === "monthly" ? "mo" : "yr"}
+                    <div
+                        className={`relative flex md:flex-col items-start gap-2 md:min-h-40 md:gap-10 md:justify-between px-5 py-2 lg:py-4 mb-2 border rounded-lg cursor-pointer hover:bg-magnolia hover:border-purplishBlue duration-300 ${
+                            option === "arcade"
+                                ? "bg-magnolia border-purplishBlue"
+                                : "border-lightGray"
+                        }`}
+                        onClick={() => handleSelectPlan("arcade")}
+                    >
+                        <img src={arcadeIcon} alt="arcade" />
+                        <div>
+                            <label
+                                className="font-bold capitalize cursor-pointer"
+                                htmlFor="arcade"
+                            >
+                                Arcade
+                            </label>
+                            <p className="text-coolGray">
+                                $
+                                {planLength === "monthly"
+                                    ? planOptions["arcade"].monthly
+                                    : planOptions["arcade"].yearly}
+                                /{planLength === "monthly" ? "mo" : "yr"}
+                            </p>
+                            {planLength === "yearly" && (
+                                <p className="text-sm font-medium">
+                                    2 months free
                                 </p>
-                                {planLength === "yearly" && (
-                                    <p className="text-sm font-medium">
-                                        2 months free
-                                    </p>
-                                )}
-                            </div>
-                            <input
-                                className="absolute inset-0 z-10 opacity-0 cursor-pointer"
-                                type="radio"
-                                name="plan"
-                                id={planType}
-                                value={planType}
-                                checked={inputPlan === planType}
-                                onChange={(e) =>
-                                    setInputPlan(
-                                        planValues.find(
-                                            (plan) =>
-                                                plan.planType === e.target.value
-                                        )
-                                    )
-                                }
-                            />
+                            )}
                         </div>
-                    ))}
+                        <input
+                            className="absolute inset-0 z-10 opacity-0 cursor-pointer"
+                            type="radio"
+                            name="plan"
+                            id="arcade"
+                            value="arcade"
+                            checked={option === "arcade"}
+                        />
+                    </div>
+
+                    <div
+                        className={`relative flex md:flex-col items-start gap-2 md:min-h-40 md:gap-10 md:justify-between px-5 py-2 lg:py-4 mb-2 border rounded-lg cursor-pointer hover:bg-magnolia hover:border-purplishBlue duration-300 ${
+                            option === "advanced"
+                                ? "bg-magnolia border-purplishBlue"
+                                : "border-lightGray"
+                        }`}
+                        onClick={() => handleSelectPlan("advanced")}
+                    >
+                        <img src={advancedIcon} alt="advanced" />
+                        <div>
+                            <label
+                                className="font-bold capitalize cursor-pointer"
+                                htmlFor="advanced"
+                            >
+                                Advanced
+                            </label>
+                            <p className="text-coolGray">
+                                $
+                                {planLength === "monthly"
+                                    ? planOptions["advanced"].monthly
+                                    : planOptions["advanced"].yearly}
+                                /{planLength === "monthly" ? "mo" : "yr"}
+                            </p>
+                            {planLength === "yearly" && (
+                                <p className="text-sm font-medium">
+                                    2 months free
+                                </p>
+                            )}
+                        </div>
+                        <input
+                            className="absolute inset-0 z-10 opacity-0 cursor-pointer"
+                            type="radio"
+                            name="plan"
+                            id="advanced"
+                            value="advanced"
+                            checked={option === "advanced"}
+                            onChange={() => {}}
+                        />
+                    </div>
+
+                    <div
+                        className={`relative flex md:flex-col items-start gap-2 md:min-h-40 md:gap-10 md:justify-between px-5 py-2 lg:py-4 mb-2 border rounded-lg cursor-pointer hover-bg-magnolia hover-border-purplishBlue duration-300 ${
+                            option === "pro"
+                                ? "bg-magnolia border-purplishBlue"
+                                : "border-lightGray"
+                        }`}
+                        onClick={() => handleSelectPlan("pro")}
+                    >
+                        <img src={proIcon} alt="pro" />
+                        <div>
+                            <label
+                                className="font-bold capitalize cursor-pointer"
+                                htmlFor="advanced"
+                            >
+                                Pro
+                            </label>
+                            <p className="text-coolGray">
+                                $
+                                {planLength === "monthly"
+                                    ? planOptions["pro"].monthly
+                                    : planOptions["pro"].yearly}
+                                /{planLength === "monthly" ? "mo" : "yr"}
+                            </p>
+                            {planLength === "yearly" && (
+                                <p className="text-sm font-medium">
+                                    2 months free
+                                </p>
+                            )}
+                        </div>
+                        <input
+                            className="absolute inset-0 z-10 opacity-0 cursor-pointer"
+                            type="radio"
+                            name="plan"
+                            id="pro"
+                            value="pro"
+                            checked={option === "pro"}
+                            onChange={() => {}}
+                        />
+                    </div>
                 </form>
 
-                <ToggleBtn inputPlan={inputPlan} />
+                <ToggleBtn />
             </section>
             <div className="btn-container">
                 <div className="font-medium flex items-center justify-between mx-auto w-[20rem] md:w-full">

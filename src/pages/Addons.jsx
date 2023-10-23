@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { nextStep, prevStep, updateAddons } from "../features/form/formSlice";
+import {
+    nextStep,
+    prevStep,
+    updateAddons,
+    updateSelectedPlan,
+} from "../features/form/formSlice";
 
 const Addons = () => {
     const { selectedPlan, planOptions, addons, step } = useSelector(
@@ -16,8 +21,12 @@ const Addons = () => {
     };
 
     const gotoPrevStep = () => {
-        if (step === 1) return;
-        dispatch(prevStep());
+        dispatch(
+            updateSelectedPlan({
+                ...selectedPlan,
+            })
+        );
+        dispatch(prevStep(1));
     };
 
     const inputStyles =
