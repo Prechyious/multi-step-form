@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    @apply h-[100dvh] bg-magnolia;
+    @apply max-h-[100dvh] md:max-h-screen bg-magnolia;
 }
 
 .container {
