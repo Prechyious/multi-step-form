@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-
+import checkmark from "../assets/images/icon-checkmark.svg";
 const Addons = ({ title, description, price, checked, onchange }) => {
     const { selectedPlan } = useSelector((state) => state.form);
     const { planLength } = selectedPlan;
@@ -17,18 +17,11 @@ const Addons = ({ title, description, price, checked, onchange }) => {
                 checked={checked}
                 onChange={onchange}
             />
-            <svg
-                className=" absolute w-4 h-4 mt-0.5 hidden peer-checked:block pointer-events-none text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 27 27"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            >
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+            <img
+                className=" absolute w-4 p-0.5 hidden peer-checked:block pointer-events-none"
+                src={checkmark}
+                alt="checkbox"
+            />
 
             <div className="flex items-center justify-between w-full md:ml-3">
                 <div>
