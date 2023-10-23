@@ -3,43 +3,14 @@ import advancedIcon from "../assets/images/icon-advanced.svg";
 import proIcon from "../assets/images/icon-pro.svg";
 import ToggleBtn from "../components/ToggleBtn";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import {
-    nextStep,
-    prevStep,
-    updateSelectedPlan,
-} from "../features/form/formSlice";
-
-const planValues = [
-    {
-        id: 1,
-        planType: "arcade",
-        planImg: arcadeIcon,
-    },
-    {
-        id: 2,
-        planType: "advanced",
-        planImg: advancedIcon,
-    },
-    {
-        id: 3,
-        planType: "pro",
-        planImg: proIcon,
-    },
-];
+import { nextStep, prevStep } from "../features/form/formSlice";
+import Plans from "../components/Plans";
 
 const SelectPlans = () => {
-    const { planOptions, selectedPlan, step } = useSelector(
-        (state) => state.form
-    );
-    const { planLength, option } = selectedPlan;
+    const { selectedPlan } = useSelector((state) => state.form);
+    const { option } = selectedPlan;
     const dispatch = useDispatch();
 
-    // const [inputPlan, setInputPlan] = useState(option);
-
-    const handleSelectPlan = (planType) => {
-        dispatch(updateSelectedPlan({ ...selectedPlan, option: planType }));
-    };
     const gotoNextStep = () => {
         if (option) {
             dispatch(nextStep());
@@ -65,124 +36,17 @@ const SelectPlans = () => {
                 </div>
 
                 <form className="w-full mb-3 md:gap-4 md:grid md:grid-cols-3 md:mb-5">
-                    <div
-                        className={`relative flex md:flex-col items-start gap-2 md:min-h-40 md:gap-10 md:justify-between px-5 py-2 lg:py-4 mb-2 border rounded-lg cursor-pointer hover:bg-magnolia hover:border-purplishBlue duration-300 ${
-                            option === "arcade"
-                                ? "bg-magnolia border-purplishBlue"
-                                : "border-lightGray"
-                        }`}
-                        onClick={() => handleSelectPlan("arcade")}
-                    >
-                        <img src={arcadeIcon} alt="arcade" />
-                        <div>
-                            <label
-                                className="font-bold capitalize cursor-pointer"
-                                htmlFor="arcade"
-                            >
-                                Arcade
-                            </label>
-                            <p className="text-coolGray">
-                                $
-                                {planLength === "monthly"
-                                    ? planOptions["arcade"].monthly
-                                    : planOptions["arcade"].yearly}
-                                /{planLength === "monthly" ? "mo" : "yr"}
-                            </p>
-                            {planLength === "yearly" && (
-                                <p className="text-sm font-medium">
-                                    2 months free
-                                </p>
-                            )}
-                        </div>
-                        <input
-                            className="absolute inset-0 z-10 opacity-0 cursor-pointer"
-                            type="radio"
-                            name="plan"
-                            id="arcade"
-                            value="arcade"
-                            checked={option === "arcade"}
-                        />
-                    </div>
-
-                    <div
-                        className={`relative flex md:flex-col items-start gap-2 md:min-h-40 md:gap-10 md:justify-between px-5 py-2 lg:py-4 mb-2 border rounded-lg cursor-pointer hover:bg-magnolia hover:border-purplishBlue duration-300 ${
-                            option === "advanced"
-                                ? "bg-magnolia border-purplishBlue"
-                                : "border-lightGray"
-                        }`}
-                        onClick={() => handleSelectPlan("advanced")}
-                    >
-                        <img src={advancedIcon} alt="advanced" />
-                        <div>
-                            <label
-                                className="font-bold capitalize cursor-pointer"
-                                htmlFor="advanced"
-                            >
-                                Advanced
-                            </label>
-                            <p className="text-coolGray">
-                                $
-                                {planLength === "monthly"
-                                    ? planOptions["advanced"].monthly
-                                    : planOptions["advanced"].yearly}
-                                /{planLength === "monthly" ? "mo" : "yr"}
-                            </p>
-                            {planLength === "yearly" && (
-                                <p className="text-sm font-medium">
-                                    2 months free
-                                </p>
-                            )}
-                        </div>
-                        <input
-                            className="absolute inset-0 z-10 opacity-0 cursor-pointer"
-                            type="radio"
-                            name="plan"
-                            id="advanced"
-                            value="advanced"
-                            checked={option === "advanced"}
-                            onChange={() => {}}
-                        />
-                    </div>
-
-                    <div
-                        className={`relative flex md:flex-col items-start gap-2 md:min-h-40 md:gap-10 md:justify-between px-5 py-2 lg:py-4 mb-2 border rounded-lg cursor-pointer hover-bg-magnolia hover-border-purplishBlue duration-300 ${
-                            option === "pro"
-                                ? "bg-magnolia border-purplishBlue"
-                                : "border-lightGray"
-                        }`}
-                        onClick={() => handleSelectPlan("pro")}
-                    >
-                        <img src={proIcon} alt="pro" />
-                        <div>
-                            <label
-                                className="font-bold capitalize cursor-pointer"
-                                htmlFor="advanced"
-                            >
-                                Pro
-                            </label>
-                            <p className="text-coolGray">
-                                $
-                                {planLength === "monthly"
-                                    ? planOptions["pro"].monthly
-                                    : planOptions["pro"].yearly}
-                                /{planLength === "monthly" ? "mo" : "yr"}
-                            </p>
-                            {planLength === "yearly" && (
-                                <p className="text-sm font-medium">
-                                    2 months free
-                                </p>
-                            )}
-                        </div>
-                        <input
-                            className="absolute inset-0 z-10 opacity-0 cursor-pointer"
-                            type="radio"
-                            name="plan"
-                            id="pro"
-                            value="pro"
-                            checked={option === "pro"}
-                            onChange={() => {}}
-                        />
-                    </div>
+                    <Plans
+                        planName="Arcade"
+                        planImg={arcadeIcon}
+                        planType="arcade"
+                    />
+                    <Plans
+                        planName="Advanced"
+                        planImg={advancedIcon}
+                        planType="advanced"
+                    />
+                    <Plans planName="Pro" planImg={proIcon} planType="pro" />
                 </form>
 
                 <ToggleBtn />

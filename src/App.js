@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import Sidebar from "./components/Sidebar";
 import PersonalInfo from "./pages/PersonalInfo";
 import SelectPlans from "./pages/SelectPlans";
-import Addons from "./pages/Addons";
+import SelectAddons from "./pages/SelectAddons";
 import Summary from "./pages/Summary";
 import ThankYou from "./pages/ThankYou";
 
@@ -15,7 +15,7 @@ const App = () => {
                 {step === 1 && <PersonalInfo />}
 
                 {step === 2 && <SelectPlans />}
-                {step === 3 && <Addons />}
+                {step === 3 && <SelectAddons />}
                 {step === 4 && <Summary />}
                 {step === 5 && <ThankYou />}
             </div>
