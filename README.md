@@ -46,7 +46,7 @@ Your users should be able to:
 ### Links
 
 -   Solution URL: [github](https://github.com/Prechyious/multi-step-form)
--   Live Site URL: [](https://my-multi-step-form.vercel.app)
+-   Live Site URL: [Live Site](https://my-multi-step-form.vercel.app)
 
 ## My process
 
